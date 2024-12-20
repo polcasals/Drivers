@@ -3,150 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Entrega</title>
+    <title>Formulario de Entregas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin: 20px;
             padding: 0;
-            background-color: #f4f4f9;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 700px;
-            margin: 50px auto;
-            background: #ffffff;
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 8px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: left;
-            color: #333;
+            margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
+            font-weight: bold;
         }
+
         input, textarea {
-            width: 100%;
+            width: calc(100% - 40px);
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        #signature-pad {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #f9f9f9;
-            width: 100%;
-            height: 200px;
-            margin-bottom: 20px;
+
+        .form-row {
+            display: flex;
+            gap: 10px;
         }
-        .button {
-            background-color: #007bff;
+
+        .form-row > div {
+            flex: 1;
+        }
+
+        button {
+            background-color: #007BFF;
             color: white;
-            border: none;
             padding: 10px 15px;
-            border-radius: 4px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            text-align: center;
         }
-        .button:hover {
+
+        button:hover {
             background-color: #0056b3;
         }
-        #clear {
-            background-color: #dc3545;
+
+        .photo-section input {
+            display: inline;
         }
-        #clear:hover {
-            background-color: #a71d2a;
+
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <form>
         <h1>Formulario de Entrega</h1>
-        <form id="delivery-form">
-            <label for="driver-name">Nombre del Conductor:</label>
-            <input type="text" id="driver-name" name="driver-name" required>
 
-            <label for="delivery-date">Fecha de Entrega:</label>
-            <input type="date" id="delivery-date" name="delivery-date" required>
+        <label for="driver-name">Nombre Conductor</label>
+        <input type="text" id="driver-name" name="driver-name" required>
 
-            <label for="delivery-time">Hora de Entrega:</label>
-            <input type="time" id="delivery-time" name="delivery-time" required>
+        <div class="form-row">
+            <div>
+                <label for="delivery-date">Fecha Entrega</label>
+                <input type="date" id="delivery-date" name="delivery-date" required>
+            </div>
 
-            <label for="plate-number">Matrícula:</label>
-            <input type="text" id="plate-number" name="plate-number" required pattern="[A-Z0-9]{1,10}" title="Introduce una matrícula válida (máx. 10 caracteres)">
+            <div>
+                <label for="delivery-time">Hora Entrega</label>
+                <input type="time" id="delivery-time" name="delivery-time" required>
+            </div>
+        </div>
 
-            <label for="brand">Marca:</label>
-            <input type="text" id="brand" name="brand" required>
+        <div class="form-row">
+            <div>
+                <label for="brand">Marca</label>
+                <input type="text" id="brand" name="brand" required>
+            </div>
 
-            <label for="model">Modelo:</label>
-            <input type="text" id="model" name="model" required>
+            <div>
+                <label for="model">Modelo</label>
+                <input type="text" id="model" name="model" required>
+            </div>
+        </div>
 
-            <label for="current-km">Kilómetros Actuales:</label>
-            <input type="number" id="current-km" name="current-km" required min="0" step="1">
+        <div class="form-row">
+            <div>
+                <label for="license-plate">Matrícula</label>
+                <input type="text" id="license-plate" name="license-plate" required>
+            </div>
 
-            <label for="comments">Comentarios Adicionales:</label>
-            <textarea id="comments" name="comments" rows="4" placeholder="Escribe cualquier observación..."></textarea>
+            <div>
+                <label for="current-km">Km Actuales</label>
+                <input type="number" id="current-km" name="current-km" required>
+            </div>
+        </div>
 
-            <!-- Campos de fotografías -->
-            <label for="front-photo">Foto Frontal:</label>
-            <input type="file" id="front-photo" name="front-photo" accept="image/*" capture="environment" required>
+        <label for="comments">Comentarios Adicionales</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
 
-            <label for="left-photo">Foto Lateral Izquierda:</label>
-            <input type="file" id="left-photo" name="left-photo" accept="image/*" capture="environment" required>
+        <label for="photo-front">Foto Frontal</label>
+        <input type="file" id="photo-front" name="photo-front" accept="image/*" capture="camera" required>
 
-            <label for="right-photo">Foto Lateral Derecha:</label>
-            <input type="file" id="right-photo" name="right-photo" accept="image/*" capture="environment" required>
+        <label for="photo-left">Foto Lateral Izquierda</label>
+        <input type="file" id="photo-left" name="photo-left" accept="image/*" capture="camera" required>
 
-            <label for="rear-photo">Foto Trasera:</label>
-            <input type="file" id="rear-photo" name="rear-photo" accept="image/*" capture="environment" required>
+        <label for="photo-right">Foto Lateral Derecha</label>
+        <input type="file" id="photo-right" name="photo-right" accept="image/*" capture="camera" required>
 
-            <label for="receiver-name">Nombre del Recibidor:</label>
-            <input type="text" id="receiver-name" name="receiver-name" required>
+        <label for="photo-back">Foto Trasera</label>
+        <input type="file" id="photo-back" name="photo-back" accept="image/*" capture="camera" required>
 
-            <label for="receiver-dni">DNI del Recibidor:</label>
-            <input type="text" id="receiver-dni" name="receiver-dni" required pattern="[0-9]{8}[A-Z]" title="Introduce un DNI válido (8 números y una letra mayúscula)">
+        <label for="receiver-name">Nombre Recibidor</label>
+        <input type="text" id="receiver-name" name="receiver-name" required>
 
-            <label>Firma Electrónica:</label>
-            <canvas id="signature-pad"></canvas>
-            <button type="button" id="clear" class="button">Borrar Firma</button>
+        <label for="receiver-dni">DNI Recibidor</label>
+        <input type="text" id="receiver-dni" name="receiver-dni" required>
 
-            <button type="submit" class="button">Enviar</button>
-        </form>
-    </div>
+        <label for="signature">Firma Recibidor</label>
+        <canvas id="signature" width="400" height="150"></canvas>
 
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <script>
-        // Inicializar Signature Pad
-        const canvas = document.getElementById('signature-pad');
-        const signaturePad = new SignaturePad(canvas);
-
-        // Limpiar firma
-        document.getElementById('clear').addEventListener('click', () => {
-            signaturePad.clear();
-        });
-
-        // Captura el evento de envío del formulario
-        document.getElementById('delivery-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            // Validar firma
-            if (signaturePad.isEmpty()) {
-                alert('Por favor, proporcione una firma.');
-                return;
-            }
-
-            // Recoger los datos del formulario
-            const formData = new FormData(document.getElementById('delivery-form'));
-            formData.append('signature', signaturePad.toDataURL());
-
-            console.log('Datos del formulario:', Object.fromEntries(formData.entries()));
-
-            alert('Formulario enviado con éxito (datos registrados en consola).');
-        });
-    </script>
+        <button type="submit">Enviar</button>
+    </form>
 </body>
 </html>
