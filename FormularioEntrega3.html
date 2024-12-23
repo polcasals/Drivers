@@ -69,7 +69,7 @@
         }
 
         .checkbox-row .checkbox-options label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .checkbox-options input[type="radio"] {
@@ -125,6 +125,35 @@
             background-size: contain;
             width: 100%;
             height: 300px;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                padding: 10px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .checkbox-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .checkbox-row .checkbox-options {
+                justify-content: flex-start;
+                gap: 10px;
+            }
+
+            input, textarea {
+                width: calc(100% - 20px);
+            }
+
+            canvas {
+                width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
@@ -293,3 +322,4 @@
     </form>
 </body>
 </html>
+
