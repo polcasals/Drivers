@@ -10,6 +10,7 @@
             margin: 20px;
             padding: 0;
             box-sizing: border-box;
+            position: relative;
         }
 
         form {
@@ -24,6 +25,7 @@
         h1 {
             text-align: left;
             margin-bottom: 20px;
+            font-size: 1.3rem;
         }
 
         label {
@@ -47,6 +49,32 @@
 
         .form-row > div {
             flex: 1;
+        }
+
+        .checkbox-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-row label {
+            flex: 2;
+        }
+
+        .checkbox-row .checkbox-options {
+            flex: 1;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .checkbox-row .checkbox-options label {
+            font-size: 0.9rem;
+        }
+
+        .checkbox-options input[type="radio"] {
+            transform: scale(1.5);
+            margin-right: 5px;
         }
 
         button {
@@ -77,14 +105,41 @@
             border: 0.5px solid black;
             margin: 20px 0;
         }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .logo img {
+            width: 100px;
+        }
+
+        .damage-section {
+            text-align: center;
+        }
+
+        .damage-section canvas {
+            background: url('car-top-view.png') no-repeat center;
+            background-size: contain;
+            width: 100%;
+            height: 300px;
+        }
     </style>
 </head>
 <body>
+    <div class="logo">
+        <img src="your-logo-url-here.png" alt="Company Logo">
+    </div>
     <form>
-        <h1>Formulario de Entrega</h1>
+        <h1>Formulario Entrega Drivers</h1>
 
-        <label for="driver-name">Nombre Conductor</label>
-        <input type="text" id="driver-name" name="driver-name" required>
+        <label for="route-number">Nº Ruta</label>
+        <input type="text" id="route-number" name="route-number" required>
+
+        <label for="delivery-address">Dirección Entrega</label>
+        <input type="text" id="delivery-address" name="delivery-address" required>
 
         <div class="form-row">
             <div>
@@ -117,8 +172,55 @@
             </div>
 
             <div>
-                <label for="current-km">Km Actuales</label>
-                <input type="number" id="current-km" name="current-km" required>
+                <label for="key-number">Nº Llaves</label>
+                <input type="number" id="key-number" name="key-number" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <label for="pickup-km">Km Recogida</label>
+                <input type="number" id="pickup-km" name="pickup-km" required>
+            </div>
+
+            <div>
+                <label for="delivery-km">Km Entrega</label>
+                <input type="number" id="delivery-km" name="delivery-km" required>
+            </div>
+        </div>
+
+        <div class="checkbox-row">
+            <label>Documentación</label>
+            <div class="checkbox-options">
+                <label><input type="radio" name="documentation" value="yes" required> Sí</label>
+                <label><input type="radio" name="documentation" value="no"> No</label>
+            </div>
+        </div>
+
+        <div class="checkbox-row">
+            <label>Tarjeta Solred</label>
+            <div class="checkbox-options">
+                <label><input type="radio" name="solred-card" value="yes" required> Sí</label>
+                <label><input type="radio" name="solred-card" value="no"> No</label>
+            </div>
+        </div>
+
+        <div class="checkbox-row">
+            <label>Estado/Limpieza</label>
+            <div class="checkbox-options">
+                <label><input type="radio" name="cleanliness" value="low" required> Bajo</label>
+                <label><input type="radio" name="cleanliness" value="medium"> Medio</label>
+                <label><input type="radio" name="cleanliness" value="high"> Alto</label>
+            </div>
+        </div>
+
+        <div class="checkbox-row">
+            <label>Combustible</label>
+            <div class="checkbox-options">
+                <label><input type="radio" name="fuel" value="quarter" required> 1/4</label>
+                <label><input type="radio" name="fuel" value="half"> 2/4</label>
+                <label><input type="radio" name="fuel" value="three-quarters"> 3/4</label>
+                <label><input type="radio" name="fuel" value="full"> 4/4</label>
             </div>
         </div>
 
@@ -153,6 +255,25 @@
 
         <hr>
 
+        <div class="damage-section">
+            <label for="damage-map">Mapa de Daños</label>
+            <canvas id="damage-map" width="600" height="300"></canvas>
+        </div>
+
+        <hr>
+
+        <div class="form-row">
+            <div>
+                <label for="company-name">Nombre Empresa</label>
+                <input type="text" id="company-name" name="company-name" required>
+            </div>
+
+            <div>
+                <label for="contact-phone">Teléfono Contacto</label>
+                <input type="text" id="contact-phone" name="contact-phone" required>
+            </div>
+        </div>
+
         <div class="form-row">
             <div>
                 <label for="receiver-name">Nombre Recibidor</label>
@@ -161,41 +282,14 @@
 
             <div>
                 <label for="receiver-dni">DNI Recibidor</label>
-                <input type="text" id="receiver-dni" name="receiver-dni" required>
+                <input type="text" id="receiver-dni" name="receiver-dni">
             </div>
         </div>
 
         <label for="signature">Firma Recibidor</label>
-        <canvas id="signature" width="400" height="150"></canvas>
+        <canvas id="signature" width="600" height="200"></canvas>
 
         <button type="submit">Enviar</button>
     </form>
-
-    <script>
-        const canvas = document.getElementById('signature');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
-
-        canvas.addEventListener('mousedown', (e) => {
-            drawing = true;
-            ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
-
-        canvas.addEventListener('mousemove', (e) => {
-            if (drawing) {
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
-            }
-        });
-
-        canvas.addEventListener('mouseup', () => {
-            drawing = false;
-        });
-
-        canvas.addEventListener('mouseout', () => {
-            drawing = false;
-        });
-    </script>
 </body>
 </html>
